@@ -22,8 +22,12 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
+  "Framework :: Pytest",
 ]
 dependencies = [
+  "pytest",
+  "pytest-xdist",
+  "rich",
 ]
 dynamic = ["version"]
 
@@ -32,16 +36,18 @@ Documentation = "https://github.com/odormond/xdist-progress#readme"
 Issues = "https://github.com/odormond/xdist-progress/issues"
 Source = "https://github.com/odormond/xdist-progress"
 
+[project.entry-points.pytest11]
+xdist_progress = "xdist_progress.plugin"
+
 [tool.hatch.version]
 path = "xdist_progress/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
-  "pytest",
   "pytest-cov",
 ]
 [tool.hatch.envs.default.scripts]
-cov = "pytest --cov-report=term-missing --cov-config=pyproject.toml --cov=xdist_progress --cov=tests {args}"
+cov = "pytest -n 3 --cov-report=term-missing --cov-config=pyproject.toml --cov=xdist_progress --cov=tests {args}"
 no-cov = "cov --no-cov {args}"
 
 [[tool.hatch.envs.test.matrix]]
