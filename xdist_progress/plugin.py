@@ -62,6 +62,7 @@ class MyTerminalReporter(TerminalReporter):
 
     def logstart(self, node, nodeid):
         gateway = node.gateway.id
+        nodeid = nodeid.replace('[', r'\[')  # Prevent rich from interpreting the test parameters
         if not self.gateways:
             self.rich_live.start()
         if gateway not in self.gateways:
